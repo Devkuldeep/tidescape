@@ -57,12 +57,26 @@ gsap.utils.toArray(".fade-up").forEach((el) =>
 const heroLetters = gsap.utils.toArray(".hero__title span");
 const heroImgs = gsap.utils.toArray(".hero__img");
 gsap.set(heroImgs, { rotate: (i) => [-8, 13, -15, 9][i] });
+
+/* Intro and scroll-scatter must never animate the SAME element, otherwise the
+   scroll timeline records the intro's hidden state and scrolling back to the top
+   shows an empty hero. So: intro → inner wrappers, scroll → outer elements. */
+heroLetters.forEach((l) => (l.innerHTML = `<i class="hero__ch">${l.textContent}</i>`));
+heroImgs.forEach((f) => {
+  const w = document.createElement("div");
+  w.className = "hero__img-in";
+  w.append(...f.childNodes);
+  f.append(w);
+});
+const heroSub = document.querySelector(".hero__sub");
+heroSub.innerHTML = `<span class="hero__sub-in">${heroSub.innerHTML}</span>`;
+
 const intro = gsap.timeline({ defaults: { ease: "expo.out" } });
 intro
-  .from(".nav", { yPercent: -100, opacity: 0, duration: 1 })
-  .from(heroLetters, { yPercent: 120, opacity: 0, duration: 1.4, stagger: 0.06 }, 0.1)
-  .from(heroImgs, { scale: 0, rotate: 0, opacity: 0, duration: 1.2, stagger: 0.12, ease: "back.out(1.6)" }, 0.7)
-  .from([".hero__sub", ".hero__lotus"], { y: 20, opacity: 0, duration: 1, stagger: 0.1 }, 1.1);
+  .from(".nav > *", { y: -30, opacity: 0, duration: 1, stagger: 0.08 })
+  .from(".hero__ch", { yPercent: 120, opacity: 0, duration: 1.4, stagger: 0.06 }, 0.1)
+  .from(".hero__img-in", { scale: 0, rotate: -14, opacity: 0, duration: 1.2, stagger: 0.12, ease: "back.out(1.6)" }, 0.7)
+  .from([".hero__sub-in", ".hero__lotus use"], { y: 20, opacity: 0, duration: 1, stagger: 0.1 }, 1.1);
 
 /* hero image hover drift with mouse */
 const hero = document.querySelector(".hero__pin");
@@ -264,5 +278,52 @@ document.querySelector(".gallery__btn--next").addEventListener("click", () => { 
 document.querySelector(".gallery__btn--prev").addEventListener("click", () => { gIndex = (gIndex - 1 + slides.length) % slides.length; gMove(); });
 window.addEventListener("resize", () => gMove(true));
 gMove(true);
+
+/* ---------- BACKGROUND VIDEO: scrubbed by whole-page scroll ---------- */
+const bgWrap = document.getElementById("bgvid");
+const bgVideo = document.getElementById("bgVideo");
+const bgVeil = document.getElementById("bgVeil");
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const bgSrc = matchMedia("(max-width: 900px)").matches ? "videos/bg-mobile.mp4" : "videos/bg.mp4";
+let bgReady = false, bgTarget = 0, bgCurrent = 0;
+
+// load fully into memory as a blob so every seek is instant
+fetch(bgSrc)
+  .then((r) => { if (!r.ok) throw 0; return r.blob(); })
+  .then((b) => (bgVideo.src = URL.createObjectURL(b)))
+  .catch(() => (bgVideo.src = bgSrc));
+bgVideo.addEventListener("loadedmetadata", () => {
+  bgVideo.pause();
+  bgVideo.currentTime = 0.001; // force Chrome to paint a real frame instead of the poster
+  bgReady = true;
+});
+
+// 0 → 1 over the page; ends exactly when the footer starts to reveal
+ScrollTrigger.create({
+  trigger: page, start: "top top", end: "bottom bottom",
+  onUpdate: (self) => (bgTarget = self.progress),
+});
+
+gsap.ticker.add(() => {
+  // clip the fixed video so the footer curtain-reveal shows underneath
+  const b = page.getBoundingClientRect().bottom;
+  bgWrap.style.clipPath = b < innerHeight ? `inset(0 0 ${Math.max(0, innerHeight - b)}px 0)` : "";
+
+  if (!bgReady || reduceMotion) return;
+  bgCurrent += (bgTarget - bgCurrent) * 0.1; // eased follow = buttery scrub
+  const t = bgCurrent * (bgVideo.duration - 0.05);
+  if (!bgVideo.seeking && Math.abs(bgVideo.currentTime - t) > 1 / 48) bgVideo.currentTime = t;
+});
+
+// veil: light over the hero, cream behind content, opens for "Stay bliss" & CTA
+const veil = (trigger, start, end, from, to) =>
+  gsap.fromTo(bgVeil, { opacity: from }, {
+    opacity: to, ease: "none", immediateRender: false,
+    scrollTrigger: { trigger, start, end, scrub: true },
+  });
+veil(".hero", "top top", "bottom top", 0.35, 0.84);
+veil(".bliss", "top bottom", "top top", 0.84, 0.45);
+veil(".comfort", "top bottom", "top 40%", 0.45, 0.84);
+veil(".cta", "top bottom", "top top", 0.84, 0.5);
 
 window.addEventListener("load", () => ScrollTrigger.refresh());

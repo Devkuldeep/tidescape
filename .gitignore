@@ -1,0 +1,4 @@
+# local-only files
+*.zip
+/Swimmer_floating_in_turquoise_water_77f5d7a4.mp4
+.DS_Store

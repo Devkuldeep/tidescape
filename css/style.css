@@ -28,7 +28,12 @@ figure { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
 
-.page { position: relative; z-index: 2; background: var(--bg); }
+.page { position: relative; z-index: 2; background: transparent; }
+
+/* ---------- background video ---------- */
+.bgvid { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: var(--bg); }
+.bgvid video { width: 100%; height: 100%; object-fit: cover; }
+.bgvid__veil { position: absolute; inset: 0; background: var(--bg); opacity: .35; }
 
 /* ---------- shared ---------- */
 .h-serif {
@@ -84,6 +89,9 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   margin-top: 4vh;
 }
 .hero__title span { display: inline-block; will-change: transform; }
+.hero__ch { display: inline-block; font-style: normal; }
+.hero__img-in { width: 100%; height: 100%; overflow: hidden; }
+.hero__sub-in { display: block; }
 .hero__img {
   position: absolute; z-index: 3;
   width: 11.5vw; aspect-ratio: 1 / 1.08;
@@ -161,7 +169,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .bliss__media img { transform: scale(1.4); }
 
 /* ---------- comfort ---------- */
-.comfort { padding: 18vh var(--gutter) 10vh; position: relative; z-index: 3; background: var(--bg); }
+.comfort { padding: 18vh var(--gutter) 10vh; position: relative; z-index: 3; }
 .comfort > h2 { margin-bottom: 12vh; }
 .comfort__list { display: grid; gap: 12vh; }
 .comfort__row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 4vw; }
@@ -178,9 +186,11 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .testi__name { margin-top: 22px; font-size: 13px; }
 .testi__meta { font-size: 11px; color: var(--ink-soft); }
 .testi__thumbs { display: flex; gap: 12px; margin-top: 12vh; }
-.testi__thumbs button { width: 74px; aspect-ratio: .9; overflow: hidden; opacity: .55; filter: grayscale(.4); transition: opacity .4s, filter .4s, transform .4s; }
-.testi__thumbs button:hover { transform: translateY(-4px); }
-.testi__thumbs button.is-active { opacity: 1; filter: none; }
+/* GSAP animates the <button>; CSS transitions live on the <img> only (avoids tween/transition fights) */
+.testi__thumbs button { width: 74px; aspect-ratio: .9; overflow: hidden; }
+.testi__thumbs button img { opacity: .55; filter: grayscale(.4); transition: opacity .4s, filter .4s, transform .6s cubic-bezier(.2,.7,.2,1); }
+.testi__thumbs button:hover img { opacity: .85; transform: scale(1.08); }
+.testi__thumbs button.is-active img { opacity: 1; filter: none; }
 
 /* ---------- gallery ---------- */
 .gallery { padding: 14vh 0 12vh; overflow: hidden; }
@@ -205,7 +215,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 
 /* ---------- footer ---------- */
 .footer {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 0;
   background: var(--dark); color: var(--dark-ink);
 }
 .footer__inner { padding: 8vh var(--gutter) 28px; }
