@@ -88,6 +88,26 @@ hero.addEventListener("mousemove", (e) => {
   });
 });
 
+/* ---------- helper: scroll-scrubbed <video data-src> ----------
+   Loads the file into memory as a blob (instant seeks, works without HTTP range support),
+   then returns setProgress(0..1); an eased ticker follows the target for buttery scrubbing. */
+function scrubVideo(video) {
+  if (video._scrub) return video._scrub; // matchMedia may re-run: reuse, don't reload
+  let target = 0, current = 0, ready = false;
+  fetch(video.dataset.src)
+    .then((r) => { if (!r.ok) throw 0; return r.blob(); })
+    .then((b) => (video.src = URL.createObjectURL(b)))
+    .catch(() => (video.src = video.dataset.src));
+  video.addEventListener("loadedmetadata", () => { video.pause(); video.currentTime = 0.001; ready = true; });
+  gsap.ticker.add(() => {
+    if (!ready || video.seeking) return;
+    current += (target - current) * 0.15;
+    const t = current * (video.duration - 0.02);
+    if (Math.abs(video.currentTime - t) > 1 / 60) video.currentTime = t;
+  });
+  return (video._scrub = (p) => (target = p));
+}
+
 const mm = gsap.matchMedia();
 
 mm.add({ desktop: "(min-width: 901px)", mobile: "(max-width: 900px)", reduce: "(prefers-reduced-motion: reduce)" }, (ctx) => {
@@ -121,9 +141,15 @@ mm.add({ desktop: "(min-width: 901px)", mobile: "(max-width: 900px)", reduce: "(
     clipPath: "inset(0 0% 0 0%)", ease: "none",
     scrollTrigger: { trigger: ".wide", start: "top bottom", end: "top top", scrub: true },
   });
-  gsap.to(".wide__frame img", {
+  gsap.to(".wide__frame video", {
     yPercent: 10, ease: "none",
     scrollTrigger: { trigger: ".wide", start: "top bottom", end: "bottom top", scrub: true },
+  });
+  // cave fly-through plays forward/backward with scroll while the section crosses the screen
+  const wideScrub = scrubVideo(document.getElementById("wideVideo"));
+  ScrollTrigger.create({
+    trigger: ".wide", start: "top bottom", end: "bottom top",
+    onUpdate: (self) => wideScrub(self.progress),
   });
 
   /* ---------- SUITES: pinned crossfade ---------- */
@@ -164,6 +190,21 @@ mm.add({ desktop: "(min-width: 901px)", mobile: "(max-width: 900px)", reduce: "(
   });
 
   /* ---------- STAY BLISS: small frame grows to fullscreen ---------- */
+  const blissVideo = document.getElementById("blissVideo");
+  const blissScrub = { t: 0 };
+  const seekBliss = () => {
+    const d = blissVideo.duration;
+    if (!d || blissVideo.seeking) return;
+    const target = blissScrub.t * (d - 0.02);
+    if (Math.abs(blissVideo.currentTime - target) > 1 / 120) blissVideo.currentTime = target;
+  };
+  // load into memory as a blob: instant seeking, and works even on servers without HTTP range support
+  if (!blissVideo.src) fetch(blissVideo.dataset.src)
+    .then((r) => { if (!r.ok) throw 0; return r.blob(); })
+    .then((b) => (blissVideo.src = URL.createObjectURL(b)))
+    .catch(() => (blissVideo.src = blissVideo.dataset.src));
+  blissVideo.addEventListener("loadedmetadata", () => { blissVideo.pause(); blissVideo.currentTime = 0.001; seekBliss(); });
+  blissVideo.addEventListener("seeked", seekBliss); // catch up if scroll moved during a seek
   const bTl = gsap.timeline({
     scrollTrigger: { trigger: ".bliss", start: "top top", end: "+=160%", scrub: 1, pin: ".bliss__pin" },
   });
@@ -171,8 +212,10 @@ mm.add({ desktop: "(min-width: 901px)", mobile: "(max-width: 900px)", reduce: "(
     .from(".bliss__media", { scale: 0, duration: 0.3, ease: "power2.out" }, 0)
     .to(".bliss__text h2:first-child", { yPercent: -120, opacity: 0, duration: 0.4 }, 0.25)
     .to(".bliss__text h2:last-child", { yPercent: 120, opacity: 0, duration: 0.4 }, 0.25)
-    .to(".bliss__media", { width: "100vw", height: "100vh", duration: 0.8, ease: "power2.inOut" }, 0.3)
-    .to(".bliss__media img", { scale: 1, duration: 0.8, ease: "power2.inOut" }, 0.3)
+    .to(".bliss__media", { width: "100%", height: "100%", duration: 0.8, ease: "power2.inOut" }, 0.3)
+    .to(".bliss__media video", { scale: 1, duration: 0.8, ease: "power2.inOut" }, 0.3)
+    // swimmer video scrubs with the pin: camera rises as the frame grows to fullscreen
+    .to(blissScrub, { t: 1, duration: 1.4, ease: "none", onUpdate: seekBliss }, 0)
     .to({}, { duration: 0.3 });
 
   /* ---------- COMFORT rows ---------- */

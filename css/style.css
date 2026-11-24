@@ -123,7 +123,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   clip-path: inset(0 8% 0 8%);
   overflow: hidden;
 }
-.wide__frame img { height: 120%; transform: translateY(-10%); }
+.wide__frame video { display: block; width: 100%; height: 120%; object-fit: cover; transform: translateY(-10%); }
 
 /* ---------- suites ---------- */
 .suites { padding-top: 4vh; }
@@ -162,11 +162,12 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .bliss__text { text-align: center; position: relative; z-index: 2; }
 .bliss__text .h-serif { font-size: clamp(40px, 5vw, 80px); line-height: 1.15; }
 .bliss__media {
-  position: absolute; left: 50%; top: 50%;
-  width: 22vw; height: 14vw; translate: -50% -50%;
+  /* centred with inset + margin:auto (no CSS translate: GSAP overrides it while scaling) */
+  position: absolute; inset: 0; margin: auto;
+  width: 22vw; height: 14vw;
   overflow: hidden; z-index: 1;
 }
-.bliss__media img { transform: scale(1.4); }
+.bliss__media video { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.4); }
 
 /* ---------- comfort ---------- */
 .comfort { padding: 18vh var(--gutter) 10vh; position: relative; z-index: 3; }
