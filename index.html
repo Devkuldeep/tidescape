@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tidescape — Luxury Seaside Hotel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- lotus symbol reused everywhere -->
+  <svg width="0" height="0" style="position:absolute">
+    <symbol id="lotus" viewBox="0 0 64 40">
+      <path d="M32 2c5 7 6 16 0 26-6-10-5-19 0-26z"/>
+      <path d="M30 29C24 20 16 15 6 14c2 9 11 15 24 15z"/>
+      <path d="M34 29c6-9 14-14 24-15-2 9-11 15-24 15z"/>
+      <path d="M29 31c-8 1-16-1-25-6 4 8 13 11 25 6z"/>
+      <path d="M35 31c8 1 16-1 25-6-4 8-13 11-25 6z"/>
+    </symbol>
+  </svg>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav" id="nav">
+    <a href="#" class="nav__logo"><svg><use href="#lotus"/></svg><span>Tidescape</span></a>
+    <nav class="nav__links">
+      <a href="#about">About</a>
+      <a href="#suites">Suites <i>▾</i></a>
+      <a href="#comfort">Services</a>
+      <a href="#experiences">Activities</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#">News</a>
+    </nav>
+    <a href="#cta" class="nav__cta link-line">Contact</a>
+  </header>
+
+  <main class="page" id="page">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="hero">
+      <div class="hero__pin">
+        <h1 class="hero__title" aria-label="Tidescape">
+          <span>T</span><span>I</span><span>D</span><span>E</span><span>S</span><span>C</span><span>A</span><span>P</span><span>E</span>
+        </h1>
+        <figure class="hero__img hero__img--1"><img src="images/hero-1.jpg" alt="Palm beach"></figure>
+        <figure class="hero__img hero__img--2"><img src="images/hero-2.jpg" alt="Seaside deck"></figure>
+        <figure class="hero__img hero__img--3"><img src="images/hero-3.jpg" alt="Turquoise shore"></figure>
+        <figure class="hero__img hero__img--4"><img src="images/hero-4.jpg" alt="Pool cabana"></figure>
+        <p class="hero__sub">Experience refined suites, fine dining, and unforgettable views of the shores of Santorini.</p>
+        <svg class="hero__lotus"><use href="#lotus"/></svg>
+      </div>
+    </section>
+
+    <!-- ================= WELCOME ================= -->
+    <section class="welcome" id="about">
+      <svg class="welcome__lotus"><use href="#lotus"/></svg>
+      <h2 class="h-serif split">Welcome to Tidescape a<br>luxury seaside hotel in<br>Santorini</h2>
+      <p class="welcome__text fade-up">Experience breathtaking ocean views, golden sunsets, and luxury crafted to perfection. Nestled by the turquoise sea, our retreat offers a perfect blend of timeless elegance and island charm for those seeking unforgettable moments.</p>
+      <a href="#suites" class="link-line fade-up">→ More about us</a>
+    </section>
+
+    <!-- ================= WIDE IMAGE ================= -->
+    <section class="wide">
+      <div class="wide__frame">
+        <img src="images/wide-cave-pool.jpg" alt="Villa interior with ocean view">
+      </div>
+    </section>
+
+    <!-- ================= SUITES ================= -->
+    <section class="suites" id="suites">
+      <h2 class="h-serif split center">Luxury stays designed<br>for ocean lovers</h2>
+
+      <div class="suites__pin">
+        <div class="suites__stage">
+          <div class="suites__left">
+            <span class="suites__rule"><i></i></span>
+
+            <article class="suite is-active">
+              <h3>01. Oceanview suite</h3>
+              <p>For travelers seeking serenity, this suite offers floor-to-ceiling windows, a private balcony, and a soaking tub with panoramic Aegean views.</p>
+              <a href="#" class="link-line">→ Know more</a>
+              <figure class="suite__thumb"><img src="images/suite-1-thumb.jpg" alt=""></figure>
+              <ul class="suite__meta"><li>⌂ 2 guests</li><li>▭ 1 King-size canopy bed</li><li>◎ Private balcony with ocean view</li></ul>
+            </article>
+
+            <article class="suite">
+              <h3>02. Sunset retreat</h3>
+              <p>A romantic hideaway with warm interiors, curated decor, and breathtaking sunset views. Perfect for couples who want to enjoy Santorini's magical evenings.</p>
+              <a href="#" class="link-line">→ Know more</a>
+              <figure class="suite__thumb"><img src="images/suite-2-thumb.jpg" alt=""></figure>
+              <ul class="suite__meta"><li>⌂ 2 guests</li><li>▭ 1 King-size canopy bed</li><li>◎ Private terrace with sunset view</li></ul>
+            </article>
+
+            <article class="suite">
+              <h3>03. Beachfront villa</h3>
+              <p>Every detail of this villa, from the plunge pool to the shaded lounge, is designed for those who love sand between their toes and the sea at their door.</p>
+              <a href="#" class="link-line">→ Know more</a>
+              <figure class="suite__thumb"><img src="images/suite-3-thumb.jpg" alt=""></figure>
+              <ul class="suite__meta"><li>⌂ 2 guests</li><li>▭ 1 King-size bed + sofa lounge</li><li>◎ Beach access + private plunge pool</li></ul>
+            </article>
+          </div>
+
+          <div class="suites__right">
+            <figure class="suite__big is-active"><img src="images/suite-1-big.jpg" alt=""></figure>
+            <figure class="suite__big"><img src="images/suite-2-big.jpg" alt=""></figure>
+            <figure class="suite__big"><img src="images/suite-3-big.jpg" alt=""></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCES ================= -->
+    <section class="exp" id="experiences">
+      <h2 class="h-serif split center">Discover experiences<br>beyond the shore</h2>
+      <div class="exp__row">
+        <article class="exp__card" data-speed="0.9">
+          <figure><img src="images/exp-infinity-pool.jpg" alt=""></figure>
+          <h4>Infinity Pool</h4>
+        </article>
+        <article class="exp__card" data-speed="1.1">
+          <figure><img src="images/exp-coves.jpg" alt=""></figure>
+          <h4>Hidden coves</h4>
+        </article>
+        <article class="exp__card" data-speed="0.95">
+          <p class="exp__note">Unwind on cliffside loungers as the sun melts into the Aegean, cocktail in hand. →</p>
+          <figure><img src="images/exp-sunset.jpg" alt=""></figure>
+          <h4>Sunset lounges</h4>
+        </article>
+        <article class="exp__card" data-speed="1.15">
+          <figure><img src="images/exp-wine.jpg" alt=""></figure>
+          <h4>Wine on the terrace</h4>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= STAY BLISS (pinned zoom) ================= -->
+    <section class="bliss" id="bliss">
+      <div class="bliss__pin">
+        <div class="bliss__text">
+          <h2 class="h-serif">Stay bliss</h2>
+          <h2 class="h-serif">Enjoy more</h2>
+        </div>
+        <div class="bliss__media">
+          <img src="images/bliss-aerial.jpg" alt="Aerial ocean">
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= COMFORT ================= -->
+    <section class="comfort" id="comfort">
+      <h2 class="h-serif split center">Experience comfort<br>beyond stay</h2>
+      <div class="comfort__list">
+        <div class="comfort__row">
+          <h3>Oceanfront dining</h3>
+          <figure><img src="images/comfort-dining.jpg" alt=""></figure>
+          <p>Enjoy fresh seafood and international cuisine with panoramic sea views, crafted daily for unforgettable moments.</p>
+        </div>
+        <div class="comfort__row">
+          <h3>Seaside bar</h3>
+          <figure><img src="images/comfort-bar.jpg" alt=""></figure>
+          <p>Crafted cocktails and fine wines with a view, perfect for evenings filled with laughter and relaxation.</p>
+        </div>
+        <div class="comfort__row">
+          <h3>Spa &amp; wellness</h3>
+          <figure><img src="images/comfort-spa.jpg" alt=""></figure>
+          <p>Rejuvenate with signature therapies, mineral treatments and rituals inspired by the sea, calm, and nature.</p>
+        </div>
+        <div class="comfort__row">
+          <h3>Fitness studio</h3>
+          <figure><img src="images/comfort-fitness.jpg" alt=""></figure>
+          <p>Modern gym facilities with a view of the waves to energize your mornings and keep you in rhythm.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONIALS ================= -->
+    <section class="testi">
+      <h2 class="h-serif split center">What our happy guests<br>are saying today</h2>
+      <div class="testi__grid">
+        <figure class="testi__photo"><img id="testiImg" src="images/guest-1-carter.jpg" alt=""></figure>
+        <div class="testi__body">
+          <blockquote id="testiQuote">“Tidescape is truly magical. We watched waves from the infinity pool. The seamless blend of luxury and natural beauty is perfect. Special thanks to the team for their exceptional service. We are already planning our next visit.”</blockquote>
+          <p class="testi__name" id="testiName">Carter</p>
+          <p class="testi__meta" id="testiMeta">Dec 2025 | Oceanview suite</p>
+          <div class="testi__thumbs">
+            <button class="is-active" data-i="0"><img src="images/guest-1-carter.jpg" alt=""></button>
+            <button data-i="1"><img src="images/guest-2-sophia.jpg" alt=""></button>
+            <button data-i="2"><img src="images/guest-3-daniel.jpg" alt=""></button>
+            <button data-i="3"><img src="images/guest-4-elena.jpg" alt=""></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GALLERY ================= -->
+    <section class="gallery" id="gallery">
+      <h2 class="h-serif split center">Experience Tidescape in<br>stunning pictures</h2>
+      <div class="gallery__track-wrap">
+        <div class="gallery__track" id="galleryTrack">
+          <figure><img src="images/gallery-1.jpg" alt=""></figure>
+          <figure><img src="images/gallery-2.jpg" alt=""></figure>
+          <figure><img src="images/gallery-3.jpg" alt=""></figure>
+          <figure><img src="images/gallery-4.jpg" alt=""></figure>
+          <figure><img src="images/gallery-5.jpg" alt=""></figure>
+        </div>
+        <button class="gallery__btn gallery__btn--prev" aria-label="Previous">‹</button>
+        <button class="gallery__btn gallery__btn--next" aria-label="Next">›</button>
+      </div>
+    </section>
+
+    <!-- ================= CTA (collage → corners) ================= -->
+    <section class="cta" id="cta">
+      <div class="cta__pin">
+        <figure class="cta__img cta__img--tl"><img src="images/cta-tl.jpg" alt=""></figure>
+        <figure class="cta__img cta__img--tr"><img src="images/cta-tr.jpg" alt=""></figure>
+        <figure class="cta__img cta__img--bl"><img src="images/cta-bl.jpg" alt=""></figure>
+        <figure class="cta__img cta__img--br"><img src="images/cta-br.jpg" alt=""></figure>
+        <div class="cta__text">
+          <h2 class="h-serif">Ready to experience<br>Tidescape?</h2>
+          <p>Book your stay today and discover seaside luxury, breathtaking views, and unforgettable moments on the shores of Santorini.</p>
+          <a href="#" class="link-line">→ Book your stay</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER (revealed under page) ================= -->
+  <footer class="footer" id="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <h2 class="footer__brand">TIDESCAPE</h2>
+        <div class="footer__contact">
+          <p>☏ +30 2286 0 12345</p>
+          <p>✉ hello@tidescape.example</p>
+        </div>
+      </div>
+      <div class="footer__mid">
+        <div class="footer__about">
+          <p>Book your stay today and discover seaside luxury, breathtaking views, and unforgettable moments on the shores of Santorini</p>
+          <a href="#" class="link-line">→ Book your stay</a>
+        </div>
+        <div class="footer__col"><h5>Explore</h5><a href="#">Home</a><a href="#about">About</a><a href="#">News</a><a href="#suites">Suites</a></div>
+        <div class="footer__col"><h5>Others</h5><a href="#comfort">Services</a><a href="#experiences">Activities</a><a href="#gallery">Gallery</a><a href="#cta">Contact</a></div>
+        <div class="footer__col"><h5>Utility</h5><a href="#">License</a><a href="#">404</a></div>
+        <div class="footer__col"><h5>Socials</h5><a href="#">Dribbble</a><a href="#">Instagram</a><a href="#">Twitter</a><a href="#">Facebook</a></div>
+      </div>
+      <div class="footer__bottom">
+        <p>Copyright ©Tidescape</p>
+        <svg class="footer__lotus"><use href="#lotus"/></svg>
+        <p>Santorini, Greece</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
